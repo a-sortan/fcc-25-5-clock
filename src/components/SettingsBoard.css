@@ -1,13 +1,16 @@
 #settings-board {
-  background-color: midnightblue;
+  /* background-color: midnightblue; */
+  border: 4px solid rgba(255, 255, 255, 0.87);;
+  border-radius: 8px;
 }
+
 .item {
   display: flex;
   justify-content: space-around;
   padding: 8px;
   max-width: 540px;
   width: 100%;
-  background-color: goldenrod;
+  /* background-color: goldenrod; */
 }
 
 .length-control {

@@ -39,7 +39,7 @@ function Board() {
         }
         break;
       case "session-increment":
-        if(sessionLength > 60*60) {
+        if(sessionLength < 60*60) {
           let si = sessionLength + 60;
           if (timerLabel == "Session") setTimerLength(si);
           setSessionLength(si);
@@ -53,7 +53,7 @@ function Board() {
         }
         break;
       case "break-increment":
-        if(breakLength > 60*60) {
+        if(breakLength < 60*60) {
           let bi = breakLength + 60;
           setBreakLength(bi);
           if (timerLabel == "Break") setTimerLength(bi);
@@ -66,15 +66,15 @@ function Board() {
   }
 
   return (
-    <div>
+    <div id="board">
       <SettingsBoard 
         sessionLength={sessionLength} 
         breakLength={breakLength} 
         onLengthChange={onLengthChange} 
         resetTimerLength={resetTimerToDefault} 
       />
-      <h2 id="timer-label">{timerLabel}</h2>
-      <button onClick={toggleTimer}>Switch </button>
+      <h1 id="timer-label">{timerLabel}</h1>
+      <button onClick={toggleTimer}><i className="bi bi-arrow-repeat"> Switch</i> </button>
       <Timer 
         id="timerInterval" 
         currentTimer={currentTimeLength}

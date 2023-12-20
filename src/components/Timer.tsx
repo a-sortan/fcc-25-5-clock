@@ -44,7 +44,7 @@ useEffect (() => {
   let key: number | undefined;
   console.log("useEffect", timerIsActive )
   console.log(style)
-  if(currentTimer == 0 ) {
+  if(currentTimer < 0 ) {
     toggleTimer();
     console.log("toggle")
   } else if(timerIsActive) {
@@ -52,7 +52,6 @@ useEffect (() => {
       setTimerLength(currentTimer - 1)
     }, 1000);
   }
- 
   return () => {
     clearInterval(key);
   }
@@ -64,6 +63,14 @@ const resetTimer = () => {
   setTimerLength(startingTimer);
 }
 
+const toggleStartPause = () => {
+  if(timerIsActive) {
+    pauseTimer();
+  } else {
+    startTimer()
+  }
+}
+
   return (
     <>
       <div id="time-left" className="display-timer" style={style} >
@@ -72,9 +79,12 @@ const resetTimer = () => {
         <span id="timerSeconds">{(currentTimer%60).toString().padStart(2,'0')}</span> */}
       </div>
       <div>
-        <button onClick={startTimer}><i className="bi bi-play-btn"> Start</i></button>
-        <button onClick={pauseTimer}><i className="bi bi-pause-btn"> Pause</i></button>
-        <button id='reset' onClick={resetTimer}><i className="bi bi-skip-start-btn"> Reset timer</i></button>
+        <button id="start_stop" onClick={toggleStartPause}>
+            <i className={timerIsActive ? "bi bi-pause-btn" : "bi bi-play-btn"}> {timerIsActive ? "Pause" : "Play"}</i>
+        </button>
+        <button id='reset' onClick={resetTimer}>
+          <i className="bi bi-skip-start-btn"><span> Reset timer</span></i>
+        </button>
       </div>
     </>
   )
