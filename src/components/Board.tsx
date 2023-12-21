@@ -22,6 +22,14 @@ function Board() {
     setBreakLength(DEF_BREAK_LENGTH);
   }
 
+  const resetBoardToDefault = () => {
+    console.log("resetBoardToDefault")
+    setTimerLabel("Session");
+    setTimerLength(DEF_SESSION_LENGTH);
+    setSessionLength(DEF_SESSION_LENGTH);
+    setBreakLength(DEF_BREAK_LENGTH);
+  }
+
   const toggleTimer = () => {
     let t:TimerLabel  = timerLabel == "Session" ? "Break" : "Session";
     let currentTimer = t == "Session" ? sessionLength : breakLength;
@@ -71,7 +79,7 @@ function Board() {
         sessionLength={sessionLength} 
         breakLength={breakLength} 
         onLengthChange={onLengthChange} 
-        resetTimerLength={resetTimerToDefault} 
+        resetTimerLengthToDefault={resetTimerToDefault} 
       />
       <h1 id="timer-label">{timerLabel}</h1>
       <button onClick={toggleTimer}><i className="bi bi-arrow-repeat"> Switch</i> </button>
@@ -81,6 +89,7 @@ function Board() {
         startingTimer={timerLabel == "Session" ? sessionLength : breakLength}
         setTimerLength={setTimerLength}
         toggleTimer={toggleTimer}
+        resetBoardToDefault={resetBoardToDefault} 
       />
     </div>
   )

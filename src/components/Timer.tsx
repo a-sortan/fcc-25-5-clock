@@ -20,14 +20,19 @@ interface TimerProps {
   startingTimer: number,
   id: string,
   setTimerLength: any,
-  toggleTimer: any
+  toggleTimer: any,
+  resetBoardToDefault: any
 }
 
-export function Timer({currentTimer, startingTimer, setTimerLength, toggleTimer}:TimerProps) {
+export function Timer({currentTimer, startingTimer, setTimerLength, toggleTimer, resetBoardToDefault}:TimerProps) {
   const [timerIsActive, setTimerActive] = useState<boolean>(false);
 
   let style = {
-    backgroundImage: `linear-gradient(0deg, green 0%, green ${currentTimer/startingTimer*100}%, transparent ${currentTimer/startingTimer*100+5}%)`
+    backgroundImage: `linear-gradient(0deg, #49a078 0%, #49a078 ${currentTimer/startingTimer*100}%, transparent ${currentTimer/startingTimer*100+5}%)`
+  }
+  let lastPortionStyle = {
+    backgroundImage: `linear-gradient(0deg, #A14A55 0%, #A14A55 ${currentTimer/startingTimer*100}%, transparent ${currentTimer/startingTimer*100+5}%)`
+    
   }
   
   const startTimer = () => {
@@ -44,13 +49,17 @@ useEffect (() => {
   let key: number | undefined;
   console.log("useEffect", timerIsActive )
   console.log(style)
-  if(currentTimer < 0 ) {
-    toggleTimer();
-    console.log("toggle")
-  } else if(timerIsActive) {
+  if(timerIsActive) {
     key = setInterval(() => {
       setTimerLength(currentTimer - 1)
     }, 1000);
+  }
+  if(currentTimer == 0 ) {
+    let sound = (document.getElementById('beep') as HTMLAudioElement);
+  console.log(sound);
+  sound.play();
+    toggleTimer();
+    console.log("toggle")
   }
   return () => {
     clearInterval(key);
@@ -58,9 +67,12 @@ useEffect (() => {
 },[timerIsActive, currentTimer])
 
 const resetTimer = () => {
-  console.log("reset timer")
+  let sound = (document.getElementById('beep') as HTMLAudioElement);
+  sound.pause();
+  sound.currentTime = 0;
   setTimerActive(false);
-  setTimerLength(startingTimer);
+  resetBoardToDefault();
+  // setTimerLength(startingTimer);
 }
 
 const toggleStartPause = () => {
@@ -73,12 +85,16 @@ const toggleStartPause = () => {
 
   return (
     <>
-      <div id="time-left" className="display-timer" style={style} >
+      <div id="time-left" className="display-timer" style={currentTimer < Math.floor(startingTimer * 0.10 ) ? lastPortionStyle :style} >
         {Math.floor((currentTimer/60)).toString().padStart(2,'0')}:{(currentTimer%60).toString().padStart(2,'0')}
         {/* <span id="timerMinutes">{Math.floor(currentTimer/60)}</span>:
         <span id="timerSeconds">{(currentTimer%60).toString().padStart(2,'0')}</span> */}
       </div>
       <div>
+        <audio id="beep" muted>
+          <source src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav" type="audio/mpeg"/>
+          Your browser does not support the audio element.
+        </audio>
         <button id="start_stop" onClick={toggleStartPause}>
             <i className={timerIsActive ? "bi bi-pause-btn" : "bi bi-play-btn"}> {timerIsActive ? "Pause" : "Play"}</i>
         </button>
