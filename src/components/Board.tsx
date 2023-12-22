@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SettingsBoard from "./SettingsBoard"
 import { Timer }  from "./Timer";
+import './Board.css';
 
 type TimerLabel = "Session" | "Break";
 
@@ -13,17 +14,8 @@ function Board() {
   const [breakLength, setBreakLength] = useState<number>(DEF_BREAK_LENGTH);
   const [timerLabel, setTimerLabel] = useState<TimerLabel>("Session");
   const [currentTimeLength, setTimerLength] = useState<number>(DEF_SESSION_LENGTH);
-  
-  const resetTimerToDefault = () => {
-    console.log("resetTimerToDefault")
-    let currentTimeLength = timerLabel == "Session" ? DEF_SESSION_LENGTH : DEF_BREAK_LENGTH;
-    setTimerLength(currentTimeLength);
-    setSessionLength(DEF_SESSION_LENGTH);
-    setBreakLength(DEF_BREAK_LENGTH);
-  }
 
   const resetBoardToDefault = () => {
-    console.log("resetBoardToDefault")
     setTimerLabel("Session");
     setTimerLength(DEF_SESSION_LENGTH);
     setSessionLength(DEF_SESSION_LENGTH);
@@ -78,19 +70,21 @@ function Board() {
       <SettingsBoard 
         sessionLength={sessionLength} 
         breakLength={breakLength} 
-        onLengthChange={onLengthChange} 
-        resetTimerLengthToDefault={resetTimerToDefault} 
+        onLengthChange={onLengthChange}
       />
-      <h1 id="timer-label">{timerLabel}</h1>
-      <button onClick={toggleTimer}><i className="bi bi-arrow-repeat"> Switch</i> </button>
-      <Timer 
-        id="timerInterval" 
-        currentTimer={currentTimeLength}
-        startingTimer={timerLabel == "Session" ? sessionLength : breakLength}
-        setTimerLength={setTimerLength}
-        toggleTimer={toggleTimer}
-        resetBoardToDefault={resetBoardToDefault} 
-      />
+      <div className="timer-display">
+        <h2 id="timer-label">{timerLabel}</h2>
+        <button onClick={toggleTimer}><i className="bi bi-arrow-repeat"> Switch</i> </button>
+        <Timer 
+          id="timerInterval" 
+          currentTimer={currentTimeLength}
+          startingTimer={timerLabel == "Session" ? sessionLength : breakLength}
+          setTimerLength={setTimerLength}
+          toggleTimer={toggleTimer}
+          resetBoardToDefault={resetBoardToDefault} 
+        />
+      </div>
+      
     </div>
   )
 }

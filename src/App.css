@@ -1,8 +1,20 @@
 #root {
   max-width: 1280px;
+  width: 70%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem;
   text-align: center;
+  min-height: 100vh;
+  /* background-color: #323232; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+  box-shadow: rgba(240, 46, 170, 0.4) 0 5px 0 5px, rgba(240, 46, 170, 0.3) 0 10px 0 10px, rgba(240, 46, 170, 0.2) 0 15px 0 15px, rgba(240, 46, 170, 0.1) 0 20px 0 20px, rgba(240, 46, 170, 0.05)0 25px 0 25px;
+  
+  box-shadow: rgba(73, 160, 120, 0.4)  5px 0, rgba(73, 160, 120, 0.4)  -5px 0,
+  rgba(73, 160, 120, 0.3)  10px 0, rgba(73, 160, 120, 0.3)  -10px 0,
+  rgba(73, 160, 120, 0.2)  15px 0, rgba(73, 160, 120, 0.2)  -15px 0,
+  rgba(73, 160, 120, 0.1)  20px 0, rgba(73, 160, 120, 0.1)  -20px 0,
+  rgba(73, 160, 120, 0.05)  25px 0, rgba(73, 160, 120, 0.05)  -25px 0;
 }
 
 .logo {

@@ -3,16 +3,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 8px solid rgba(255, 255, 255, 0.87);;
+  border: 8px solid rgba(255, 255, 255, 0.87);
   border-radius: 50%;
   width: 200px;
   height: 200px;
   text-align: center;
   font-size: 3rem;
-  transition: background-image 2s ease-out;
-   /* background-color: linear-gradient(
-    0deg, 
-    green 0%, 
-    green 39%, 
-    transparent 39%);  */
 }

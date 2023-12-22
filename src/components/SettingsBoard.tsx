@@ -3,11 +3,10 @@ import './SettingsBoard.css';
 interface SettingsProps {
   sessionLength: number,
   breakLength: number,
-  onLengthChange: any,
-  resetTimerLengthToDefault: any
+  onLengthChange: any
 }
 
-function SettingsBoard({sessionLength, breakLength, onLengthChange, resetTimerLengthToDefault}: SettingsProps) {
+function SettingsBoard({sessionLength, breakLength, onLengthChange}: SettingsProps) {                             
   return (
     <div id="settings-board">
       <div className="item">
@@ -36,11 +35,6 @@ function SettingsBoard({sessionLength, breakLength, onLengthChange, resetTimerLe
           </p>
         </div>
       </div>
-      {/* <div >
-        <h2>Task</h2>
-        <label htmlFor="task"><input type="text" id="task"/></label>
-      </div> */}
-      <button onClick={() => {resetTimerLengthToDefault()}}><i className="bi bi-skip-start-btn"> Reset to default</i></button>
     </div>
   )
 }

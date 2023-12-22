@@ -27,28 +27,28 @@ interface TimerProps {
 export function Timer({currentTimer, startingTimer, setTimerLength, toggleTimer, resetBoardToDefault}:TimerProps) {
   const [timerIsActive, setTimerActive] = useState<boolean>(false);
 
-  let style = {
-    backgroundImage: `linear-gradient(0deg, #49a078 0%, #49a078 ${currentTimer/startingTimer*100}%, transparent ${currentTimer/startingTimer*100+5}%)`
+  let bckStyle = {
+    backgroundImage: `linear-gradient(0deg, rgb(73, 160, 120) 0%, 
+                                            rgb(73, 160, 120) ${currentTimer/startingTimer*100}%,
+                                            transparent ${currentTimer/startingTimer*100+5}%)`
   }
-  let lastPortionStyle = {
-    backgroundImage: `linear-gradient(0deg, #A14A55 0%, #A14A55 ${currentTimer/startingTimer*100}%, transparent ${currentTimer/startingTimer*100+5}%)`
+  let lastPortionBckStyle = {
+    backgroundImage: `linear-gradient(0deg, rgb(161, 74, 85) 0%, 
+                                            rgb(161, 74, 85) ${currentTimer/startingTimer*100}%, 
+                                            transparent ${currentTimer/startingTimer*100+5}%)`
     
   }
   
   const startTimer = () => {
-    console.log("start timer - currentTimer", currentTimer);
     setTimerActive(true);
   }
 
 const pauseTimer = () => {
-  console.log("pauseTimer - startingTimer", startTimer);
   setTimerActive(false);
 }
 
 useEffect (() => {
   let key: number | undefined;
-  console.log("useEffect", timerIsActive )
-  console.log(style)
   if(timerIsActive) {
     key = setInterval(() => {
       setTimerLength(currentTimer - 1)
@@ -56,10 +56,8 @@ useEffect (() => {
   }
   if(currentTimer == 0 ) {
     let sound = (document.getElementById('beep') as HTMLAudioElement);
-  console.log(sound);
-  sound.play();
+    sound.play();
     toggleTimer();
-    console.log("toggle")
   }
   return () => {
     clearInterval(key);
@@ -72,7 +70,6 @@ const resetTimer = () => {
   sound.currentTime = 0;
   setTimerActive(false);
   resetBoardToDefault();
-  // setTimerLength(startingTimer);
 }
 
 const toggleStartPause = () => {
@@ -85,10 +82,8 @@ const toggleStartPause = () => {
 
   return (
     <>
-      <div id="time-left" className="display-timer" style={currentTimer < Math.floor(startingTimer * 0.10 ) ? lastPortionStyle :style} >
+      <div id="time-left" className="display-timer" style={currentTimer < 30 ? lastPortionBckStyle : bckStyle} >
         {Math.floor((currentTimer/60)).toString().padStart(2,'0')}:{(currentTimer%60).toString().padStart(2,'0')}
-        {/* <span id="timerMinutes">{Math.floor(currentTimer/60)}</span>:
-        <span id="timerSeconds">{(currentTimer%60).toString().padStart(2,'0')}</span> */}
       </div>
       <div>
         <audio id="beep" muted>
@@ -96,7 +91,7 @@ const toggleStartPause = () => {
           Your browser does not support the audio element.
         </audio>
         <button id="start_stop" onClick={toggleStartPause}>
-            <i className={timerIsActive ? "bi bi-pause-btn" : "bi bi-play-btn"}> {timerIsActive ? "Pause" : "Play"}</i>
+            <i className={timerIsActive ? "bi bi-pause-btn" : "bi bi-play-btn"}> {timerIsActive ? "Pause" : "Start"}</i>
         </button>
         <button id='reset' onClick={resetTimer}>
           <i className="bi bi-skip-start-btn"><span> Reset timer</span></i>
