@@ -14,6 +14,7 @@
 .item {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   padding: 8px;
   max-width: 540px;
   width: 100%;
@@ -21,7 +22,7 @@
 }
 
 .length-control {
-  width: 250px;
+  max-width: 250px;
 }
 
 .length-control p {

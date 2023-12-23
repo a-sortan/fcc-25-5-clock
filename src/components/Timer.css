@@ -3,10 +3,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 8px solid rgba(255, 255, 255, 0.87);
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
+  border: 2px solid rgba(255, 255, 255, 0.87);
+  border-radius: 50%; 
+  width: 160px;
+  height: 160px;
   text-align: center;
   font-size: 3rem;
 }
