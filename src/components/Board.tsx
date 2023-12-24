@@ -12,7 +12,7 @@ function Board() {
   
   const [sessionLength, setSessionLength] = useState<number>(DEF_SESSION_LENGTH);
   const [breakLength, setBreakLength] = useState<number>(DEF_BREAK_LENGTH);
-  const [timerLabel, setTimerLabel] = useState<TimerLabel>("Session");
+  const [currentTimeLabel, setTimerLabel] = useState<TimerLabel>("Session");
   const [currentTimeLength, setTimerLength] = useState<number>(DEF_SESSION_LENGTH);
 
   const resetBoardToDefault = () => {
@@ -23,68 +23,38 @@ function Board() {
   }
 
   const toggleTimer = () => {
-    let t:TimerLabel  = timerLabel == "Session" ? "Break" : "Session";
+    let t:TimerLabel  = currentTimeLabel == "Session" ? "Break" : "Session";
     let currentTimer = t == "Session" ? sessionLength : breakLength;
     setTimerLabel(t);
     setTimerLength(currentTimer);
   }
 
-  const onLengthChange = (id: string) => {
-    switch(id) {
-      case "session-decrement":
-        if(sessionLength > 60) {
-          let sd = sessionLength - 60;
-          setSessionLength(sd);
-          if (timerLabel == "Session") setTimerLength(sd);
-        }
-        break;
-      case "session-increment":
-        if(sessionLength < 60*60) {
-          let si = sessionLength + 60;
-          if (timerLabel == "Session") setTimerLength(si);
-          setSessionLength(si);
-        }
-        break;
-      case "break-decrement":
-        if(breakLength > 60) {
-          let bd = breakLength - 60;
-          setBreakLength(bd);
-          if (timerLabel == "Break") setTimerLength(bd);
-        }
-        break;
-      case "break-increment":
-        if(breakLength < 60*60) {
-          let bi = breakLength + 60;
-          setBreakLength(bi);
-          if (timerLabel == "Break") setTimerLength(bi);
-        }
-        break;
-      default:
-        console.log("error");
-        break;
-    }
+  const getCurrentTimeLabel = () => {
+    return currentTimeLabel;
   }
 
   return (
     <div id="board">
       <SettingsBoard 
         sessionLength={sessionLength} 
-        breakLength={breakLength} 
-        onLengthChange={onLengthChange}
+        breakLength={breakLength}
+        setSessionLength={setSessionLength}
+        setBreakLength={setBreakLength}
+        getCurrentTimeLabel={getCurrentTimeLabel}
+        setTimerLength={setTimerLength}
       />
       <div className="timer-display">
-        <h2 id="timer-label">{timerLabel}</h2>
+        <h2 id="timer-label">{currentTimeLabel}</h2>
         <button onClick={toggleTimer}><i className="bi bi-arrow-repeat"> Switch</i> </button>
         <Timer 
           id="timerInterval" 
           currentTimer={currentTimeLength}
-          startingTimer={timerLabel == "Session" ? sessionLength : breakLength}
+          startingTimer={currentTimeLabel == "Session" ? sessionLength : breakLength}
           setTimerLength={setTimerLength}
           toggleTimer={toggleTimer}
           resetBoardToDefault={resetBoardToDefault} 
         />
       </div>
-      
     </div>
   )
 }

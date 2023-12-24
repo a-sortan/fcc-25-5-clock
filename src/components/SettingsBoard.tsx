@@ -3,10 +3,48 @@ import './SettingsBoard.css';
 interface SettingsProps {
   sessionLength: number,
   breakLength: number,
-  onLengthChange: any
+  setSessionLength: any,
+  setBreakLength: any,
+  getCurrentTimeLabel: any,
+  setTimerLength: any
 }
 
-function SettingsBoard({sessionLength, breakLength, onLengthChange}: SettingsProps) {                             
+function SettingsBoard({sessionLength, breakLength, setSessionLength, setBreakLength, getCurrentTimeLabel, setTimerLength}: SettingsProps) {
+  const onLengthChange = (id: string) => {
+    switch(id) {
+      case "session-decrement":
+        if(sessionLength > 60) {
+          let sd = sessionLength - 60;
+          setSessionLength(sd);
+          if (getCurrentTimeLabel() == "Session") setTimerLength(sd);
+        }
+        break;
+      case "session-increment":
+        if(sessionLength < 60*60) {
+          let si = sessionLength + 60;
+          if (getCurrentTimeLabel() == "Session") setTimerLength(si);
+          setSessionLength(si);
+        }
+        break;
+      case "break-decrement":
+        if(breakLength > 60) {
+          let bd = breakLength - 60;
+          setBreakLength(bd);
+          if (getCurrentTimeLabel() == "Break") setTimerLength(bd);
+        }
+        break;
+      case "break-increment":
+        if(breakLength < 60*60) {
+          let bi = breakLength + 60;
+          setBreakLength(bi);
+          if (getCurrentTimeLabel() == "Break") setTimerLength(bi);
+        }
+        break;
+      default:
+        console.log("error");
+        break;
+    }
+  }                             
   return (
     <div id="settings-board">
       <div className="item">
